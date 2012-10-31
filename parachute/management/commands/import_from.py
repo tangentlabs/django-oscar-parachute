@@ -6,12 +6,9 @@ from django.core.management.base import LabelCommand
 
 
 class Command(LabelCommand):
-    import_app = 'importer'
+    import_app = 'parachute'
 
     option_list = LabelCommand.option_list + (
-        make_option('--importer',
-            dest='force_update',
-            help='Specify you own importer app to be used by parachute.'),
         make_option('--database',
             dest='database',
             default=None,
@@ -44,21 +41,33 @@ class Command(LabelCommand):
         )
 
     def handle_label(self, label, **options):
+        platform_app = None
+
         logger = self._get_logger()
 
-        # import the correct app for the desired backend
-        platform_app = options.importer
-        if not platform_app:
-            platform_app = "%s.%s" % (self.import_app, label)
-
-        logger.debug('trying to import platform app: %s', platform_app)
+        logger.debug('attempting to import app: %s', label)
 
         try:
-            load_app("%s.%s" % (self.import_app, label))
+            load_app(label)
         except ImportError:
-            logger.error("invalid import backend '%s' specified", label)
-            return
-        logger.info("succesfully loaded importer app for '%s'", label)
+            logger.debug("could not import custom backend '%s'", label)
+        else:
+            platform_app = label
+
+        if not platform_app:
+            logger.debug('trying to import from parachute default apps')
+
+            # import the correct app for the desired backend
+            label = "%s.%s" % (self.import_app, label)
+            try:
+                load_app(label)
+            except ImportError:
+                logger.error("invalid import backend '%s' specified", label)
+                return
+            else:
+                platform_app = label
+
+        logger.info("succesfully loaded importer app for '%s'", platform_app)
 
         try:
             backend = __import__(platform_app, globals(), locals(), ['Importer'])
