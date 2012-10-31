@@ -1,13 +1,13 @@
-Oscar Migrator
-==============
+Oscar Parachute
+===============
 
-The Oscar Migrator provides a management command to move import your
+The Oscar Parachute provides a management command to move import your
 existing ecommerce data from existing platforms to Oscar. 
 
 The Basic
 ---------
 
-``Oscar Migrator`` provides a management command ``import_from`` that
+``Oscar Parachute`` provides a management command ``import_from`` that
 that is used to import from your database directly using the 
 corresponding app to your ecommerce platform, e.g. ``oscommerce``, to
 access the database through the Django ORM.
@@ -45,7 +45,6 @@ OSCommerce
 Website: `OSCommerce <www.oscommerce.com>`_
 
 
-
 Contributing
 ============
 
@@ -54,5 +53,5 @@ Fork it and change it.
 License
 =======
 
-Oscar Migrator is released under the permissive `New BSD license
+Oscar Parachute is released under the permissive `New BSD license
 <https://github.com/tangentlabs/oscar-migrator/blob/master/LICENSE>`_.
