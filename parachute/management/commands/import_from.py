@@ -72,6 +72,7 @@ class Command(LabelCommand):
         try:
             backend = __import__(platform_app, globals(), locals(), ['Importer'])
             importer = backend.Importer(
+                app_name=label.split('.')[-1],
                 force_update=options.get('force_update', False),
                 verbosity=int(options.get('verbosity', logging.INFO)),
             )
@@ -92,8 +93,8 @@ class Command(LabelCommand):
         if options.get('import_orders'):
             importer.import_orders()
 
-        if options.get('import_old_urls'):
-            importer.import_old_urls()
+        #if options.get('import_old_urls'):
+        #    importer.import_old_urls()
 
     def _get_logger(self):
         logger = logging.getLogger(__file__)
