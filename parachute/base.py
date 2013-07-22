@@ -95,13 +95,48 @@ class BaseImporter(object):
             db_profile['PASSWORD'] = password
 
     def import_customers(self):
+        """
+        Handle importing customers from your old system into Oscar. This will
+        most likely require overwriting ``convert_password_hash`` as well.
+
+        The method is only executed when ``--import-customers`` is specified
+        on the import command.
+        """
         raise NotImplementedError()
 
     def import_orders(self):
+        """
+        Handle importing orders from your old system into Oscar.
+
+        The method is only executed when ``--import-orders`` is specified
+        on the import command.
+        """
         raise NotImplementedError()
 
     def import_catalogue(self):
+        """
+        Handle importing catalogue from your old system into Oscar.
+
+        The method is only executed when ``--import-catalogue`` is specified
+        on the import command.
+        """
         raise NotImplementedError()
 
     def convert_password_hash(self, password):
+        """
+        We are assuming that the application you are importing into Oscar
+        did not store passwords in plain text. Therefore you'll have password
+        hash for each user that needs to be converted to a format that Django
+        understands. Implement the conversion of the existing password hash
+        to a Django hash. It takes a *password* hash and should return a string
+        that represents the way a password hash is stored in Django. Take a
+        closer look at
+        https://docs.djangoproject.com/en/dev/topics/auth/passwords/#how-django-stores-passwords
+        for more details on the password hash format in Django and other
+        password storage options. For reference, a password hash in Django
+        has the following structure:
+
+            <algorithm>$<iterations>$<salt>$<hash>
+
+        """
         raise NotImplementedError()
