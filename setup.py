@@ -15,10 +15,12 @@ setup(
     packages=find_packages(exclude=["tests*"]),
     include_package_data=True,
     install_requires=[
-        'versiontools>=1.9.1',
         'Django>=1.4.2',
         'dingus>=0.3.4',
         'django-oscar>=0.4',
+    ],
+    setup_requires=[
+        'versiontools>=1.9.1',
     ],
     # See http://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
